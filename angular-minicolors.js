@@ -48,7 +48,7 @@ angular.module('minicolors').directive('minicolors', ['minicolors', '$timeout', 
         //we are in digest or apply, and therefore call a timeout function
         $timeout(function() {
           var color = ngModel.$viewValue;
-          element.minicolors('value', color);
+          element.minicolors('rgbaString', color);
         }, 0, false);
       };
 
@@ -59,9 +59,10 @@ angular.module('minicolors').directive('minicolors', ['minicolors', '$timeout', 
           return;
         }
         var settings = getSettings();
-        settings.change = function (hex) {
+        settings.change = function () {
+          console.log('$setViewValue', arguments);
           scope.$apply(function () {
-            ngModel.$setViewValue(hex);
+            ngModel.$setViewValue(element.minicolors('rgbaString'));
           });
         };
 
@@ -77,7 +78,7 @@ angular.module('minicolors').directive('minicolors', ['minicolors', '$timeout', 
         if (!inititalized) {
           $timeout(function() {
             var color = ngModel.$viewValue;
-            element.minicolors('value', color);
+            element.minicolors('rgbaString', color);
           }, 0);
           inititalized = true;
           return;
